@@ -74,6 +74,25 @@ export const AlarmHistorySchema = z.object({
 });
 export type AlarmHistory = z.infer<typeof AlarmHistorySchema>;
 
+// Notification Schema
+export const NotificationTypeEnum = z.enum([
+  "ALARM",
+  "INFO",
+  "SUCCESS",
+  "ERROR",
+]);
+export type NotificationType = z.infer<typeof NotificationTypeEnum>;
+
+export const NotificationSchema = z.object({
+  id: z.string(),
+  type: NotificationTypeEnum,
+  title: z.string(),
+  message: z.string(),
+  time: z.string(),
+  level: z.enum(["CRITICAL", "WARNING", "INFO"]).optional(), // For alarms
+});
+export type Notification = z.infer<typeof NotificationSchema>;
+
 // Asset Schema
 export const AssetSchema = z.object({
   id: z.string(),

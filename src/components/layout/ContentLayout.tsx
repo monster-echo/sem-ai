@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
 import Sidebar from "./Sidebar";
+import NotificationTicker from "../dashboard/NotificationTicker";
 
 interface ContentLayoutProps {
   children: React.ReactNode;
@@ -42,16 +43,22 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({ children }) => {
       </div>
 
       <div className="flex flex-col flex-1 min-w-0 relative transition-all duration-300">
-        <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between md:justify-end items-center shadow-lg shrink-0 h-16 relative z-10">
-          <button
-            className="md:hidden p-2 -ml-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-            onClick={() => setIsMobileMenuOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
+        <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between shadow-lg shrink-0 h-16 relative z-10">
+          <div className="flex items-center">
+            <button
+              className="md:hidden p-2 -ml-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex-1 px-4 flex justify-center">
+            <NotificationTicker />
+          </div>
+
+          <div className="flex items-center gap-4 shrink-0">
             <div className="text-right hidden md:block pl-4 border-l border-slate-200 dark:border-slate-800">
               <div className="text-xl font-mono font-bold text-slate-900 dark:text-white leading-none">
                 {currentTime.toLocaleTimeString("zh-CN", { hour12: false })}

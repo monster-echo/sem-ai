@@ -2,6 +2,8 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import { Toaster } from "sonner";
+import { useTheme } from "next-themes";
 import DashboardLayout from "./DashboardLayout";
 import ContentLayout from "./ContentLayout";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -13,6 +15,7 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const { loaded } = useTranslation();
+  const { theme } = useTheme();
 
   // Prevent hydration mismatch by waiting for store rehydration
   if (!loaded) {
@@ -31,11 +34,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   // Determine if we are on the dashboard page
   const isDashboard = pathname === "/dashboard" || pathname === "/";
 
-  if (isDashboard) {
-    return <DashboardLayout>{children}</DashboardLayout>;
-  }
-
-  return <ContentLayout>{children}</ContentLayout>;
+  return (
+    <>
+      {isDashboard ? (
+        <DashboardLayout>{children}</DashboardLayout>
+      ) : (
+        <ContentLayout>{children}</ContentLayout>
+      )}
+      <Toaster
+        theme={theme as "light" | "dark" | "system"}
+        richColors
+        position="top-center"
+        closeButton
+      />
+    </>
+  );
 };
 
 export default MainLayout;

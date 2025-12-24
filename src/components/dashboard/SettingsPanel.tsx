@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Settings, User, Bell, Shield, Database, Save } from "lucide-react";
+import { toast } from "sonner";
 
 export default function SettingsPanel() {
   const [activeTab, setActiveTab] = useState("general");
@@ -18,6 +19,23 @@ export default function SettingsPanel() {
     const timer = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSave = () => {
+    toast.success("设置已保存", {
+      description: "您的更改已成功应用到系统中。",
+      duration: 3000,
+    });
+  };
+
+  const toggleNotification = (key: keyof typeof notifications) => {
+    const newValue = !notifications[key];
+    setNotifications((prev) => ({ ...prev, [key]: newValue }));
+    toast.info(`通知设置已更新`, {
+      description: `${
+        key === "email" ? "邮件" : key === "push" ? "推送" : "短信"
+      }通知已${newValue ? "开启" : "关闭"}`,
+    });
+  };
 
   const tabs = [
     {
@@ -117,12 +135,7 @@ export default function SettingsPanel() {
                         type="checkbox"
                         aria-label="email notifications"
                         checked={notifications.email}
-                        onChange={() =>
-                          setNotifications({
-                            ...notifications,
-                            email: !notifications.email,
-                          })
-                        }
+                        onChange={() => toggleNotification("email")}
                         className="sr-only peer"
                       />
                       <div className="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -143,12 +156,7 @@ export default function SettingsPanel() {
                         type="checkbox"
                         aria-label="notifications"
                         checked={notifications.push}
-                        onChange={() =>
-                          setNotifications({
-                            ...notifications,
-                            push: !notifications.push,
-                          })
-                        }
+                        onChange={() => toggleNotification("push")}
                         className="sr-only peer"
                       />
                       <div className="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -169,12 +177,7 @@ export default function SettingsPanel() {
                         type="checkbox"
                         aria-label="SMS Notifications"
                         checked={notifications.sms}
-                        onChange={() =>
-                          setNotifications({
-                            ...notifications,
-                            sms: !notifications.sms,
-                          })
-                        }
+                        onChange={() => toggleNotification("sms")}
                         className="sr-only peer"
                       />
                       <div className="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -199,7 +202,10 @@ export default function SettingsPanel() {
 
             {/* Save Button */}
             <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex justify-end">
-              <button className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-all shadow-lg shadow-blue-900/20 active:scale-95">
+              <button
+                onClick={handleSave}
+                className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-all shadow-lg shadow-blue-900/20 active:scale-95"
+              >
                 <Save className="w-4 h-4" />
                 保存更改
               </button>

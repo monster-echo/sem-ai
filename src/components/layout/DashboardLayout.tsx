@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Menu, Factory } from "lucide-react";
+import NotificationTicker from "../dashboard/NotificationTicker";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -37,7 +38,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <Menu className="w-6 h-6" />
             </button>
 
-            <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg">
+            <div className="w-9 h-9 bg-linear-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg">
               <Factory className="text-white w-5 h-5" />
             </div>
             <div>
@@ -49,7 +50,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               </p>
             </div>
           </div>
-
+          <div className="flex-1 px-4 flex justify-center">
+            <NotificationTicker />
+          </div>
           <div className="flex items-center gap-4">
             <div className="text-right hidden md:block pl-4 border-l border-slate-200 dark:border-slate-800">
               <div className="text-xl font-mono font-bold text-slate-900 dark:text-white leading-none">

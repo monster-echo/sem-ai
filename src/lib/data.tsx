@@ -8,6 +8,7 @@ import {
   MachineStatus,
   MaintenanceRecord,
   AlarmHistory,
+  Notification,
   Asset,
   Gateway,
   MachineStatusConfig,
@@ -222,6 +223,49 @@ export const generateAlarmHistory = (): AlarmHistory[] => {
       message: "气压不足",
       time: "Yesterday",
       level: "CRITICAL",
+    },
+  ];
+};
+
+export const generateNotifications = (): Notification[] => {
+  return [
+    {
+      id: "NOT-001",
+      type: "ALARM",
+      title: "CNC-HAAS-017",
+      message: "主轴过载报警 (Overload)",
+      time: "10:23:45",
+      level: "CRITICAL",
+    },
+    {
+      id: "NOT-002",
+      type: "SUCCESS",
+      title: "系统更新",
+      message: "系统补丁更新成功 (v2.1.0)",
+      time: "10:00:00",
+    },
+    {
+      id: "NOT-003",
+      type: "INFO",
+      title: "维护提醒",
+      message:
+        "B区设备将在下午2点进行例行检查, 请提前安排生产计划，确保生产顺利进行。",
+      time: "09:30:00",
+    },
+    {
+      id: "NOT-004",
+      type: "ERROR",
+      title: "连接失败",
+      message: "无法连接到网关 GW-004",
+      time: "09:15:00",
+    },
+    {
+      id: "NOT-005",
+      type: "ALARM",
+      title: "CNC-FANUC-048",
+      message: "冷却液温度过高",
+      time: "09:10:00",
+      level: "WARNING",
     },
   ];
 };
