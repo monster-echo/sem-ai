@@ -1,24 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
-import {
-  Settings,
-  User,
-  Bell,
-  Shield,
-  Database,
-  Palette,
-  Globe,
-  Save,
-  Moon,
-  Sun,
-  Monitor,
-} from "lucide-react";
+import { Settings, User, Bell, Shield, Database, Save } from "lucide-react";
 
 export default function SettingsPanel() {
   const [activeTab, setActiveTab] = useState("general");
-  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [notifications, setNotifications] = useState({
     email: true,
@@ -28,7 +14,9 @@ export default function SettingsPanel() {
   });
 
   useEffect(() => {
-    setMounted(true);
+    // Use setTimeout to avoid synchronous state update warning
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const tabs = [
@@ -127,6 +115,7 @@ export default function SettingsPanel() {
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
+                        aria-label="email notifications"
                         checked={notifications.email}
                         onChange={() =>
                           setNotifications({
@@ -152,6 +141,7 @@ export default function SettingsPanel() {
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
+                        aria-label="notifications"
                         checked={notifications.push}
                         onChange={() =>
                           setNotifications({
@@ -177,6 +167,7 @@ export default function SettingsPanel() {
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
+                        aria-label="SMS Notifications"
                         checked={notifications.sms}
                         onChange={() =>
                           setNotifications({

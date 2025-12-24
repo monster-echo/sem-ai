@@ -121,6 +121,7 @@ const AICopilot: React.FC<AICopilotProps> = ({ stats, machines }) => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="x"
               className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 p-1 rounded-md transition-colors"
             >
               <X className="w-4 h-4" />
@@ -195,6 +196,7 @@ const AICopilot: React.FC<AICopilotProps> = ({ stats, machines }) => {
               />
               <button
                 onClick={handleSendMessage}
+                aria-label="send message"
                 disabled={!inputValue.trim()}
                 className="absolute right-2 p-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >

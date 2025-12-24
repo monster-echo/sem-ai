@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
   Search,
-  Filter,
   MoreHorizontal,
   Plus,
   Download,
@@ -17,13 +16,9 @@ import {
 import { generateAssetList } from "@/lib/data";
 
 export default function AssetsPanel() {
-  const [assets, setAssets] = useState([]);
+  const [assets] = useState(() => generateAssetList());
   const [filterType, setFilterType] = useState("ALL");
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    setAssets(generateAssetList());
-  }, []);
 
   const filteredAssets = useMemo(() => {
     return assets.filter((asset) => {
@@ -40,7 +35,7 @@ export default function AssetsPanel() {
     return assets.reduce((sum, asset) => sum + asset.value, 0);
   }, [assets]);
 
-  const formatCurrency = (value) => {
+  const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("zh-CN", {
       style: "currency",
       currency: "CNY",
@@ -123,6 +118,7 @@ export default function AssetsPanel() {
             </div>
             <select
               value={filterType}
+              aria-label="filter by type"
               onChange={(e) => setFilterType(e.target.value)}
               className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
             >
@@ -139,7 +135,10 @@ export default function AssetsPanel() {
               <Plus className="w-4 h-4" />
               新增资产
             </button>
-            <button className="p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <button
+              aria-label="download"
+              className="p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            >
               <Download className="w-4 h-4" />
             </button>
           </div>
@@ -237,7 +236,10 @@ export default function AssetsPanel() {
                     {formatCurrency(asset.value)}
                   </td>
                   <td className="p-4 text-center">
-                    <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                    <button
+                      aria-label="more options"
+                      className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                    >
                       <MoreHorizontal className="w-4 h-4" />
                     </button>
                   </td>

@@ -32,6 +32,7 @@ import {
 } from "recharts";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useTheme } from "next-themes";
+import { Machine } from "@/types";
 
 export default function DashboardPage() {
   const { allMachines, hourlyData, stats } = useMachineData();
@@ -40,7 +41,7 @@ export default function DashboardPage() {
   const [viewMode, setViewMode] = useState<"heatmap" | "grid">("heatmap");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedMachine, setSelectedMachine] = useState(null);
+  const [selectedMachine, setSelectedMachine] = useState<Machine | null>(null);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
 
@@ -57,9 +58,15 @@ export default function DashboardPage() {
     currentPage * itemsPerPage
   );
 
-  useEffect(() => {
+  const handleStatusFilterChange = (status: string) => {
+    setStatusFilter(status);
     setCurrentPage(1);
-  }, [statusFilter, viewMode]);
+  };
+
+  const handleViewModeChange = (mode: "heatmap" | "grid") => {
+    setViewMode(mode);
+    setCurrentPage(1);
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -91,7 +98,7 @@ export default function DashboardPage() {
       <div className="flex justify-between items-center mb-4 bg-white/50 dark:bg-slate-900/50 p-2 rounded-xl border border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setStatusFilter("ALL")}
+            onClick={() => handleStatusFilterChange("ALL")}
             className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
               statusFilter === "ALL"
                 ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white shadow"
@@ -102,7 +109,7 @@ export default function DashboardPage() {
           </button>
           <div className="w-px bg-slate-300 dark:bg-slate-700 mx-1"></div>
           <button
-            onClick={() => setStatusFilter("RUNNING")}
+            onClick={() => handleStatusFilterChange("RUNNING")}
             className={`px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition-colors ${
               statusFilter === "RUNNING"
                 ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50"
@@ -113,7 +120,7 @@ export default function DashboardPage() {
             {t.common.running} ({stats.running})
           </button>
           <button
-            onClick={() => setStatusFilter("IDLE")}
+            onClick={() => handleStatusFilterChange("IDLE")}
             className={`px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition-colors ${
               statusFilter === "IDLE"
                 ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-900/50"
@@ -124,7 +131,7 @@ export default function DashboardPage() {
             {t.common.idle} ({stats.idle})
           </button>
           <button
-            onClick={() => setStatusFilter("ALARM")}
+            onClick={() => handleStatusFilterChange("ALARM")}
             className={`px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition-colors ${
               statusFilter === "ALARM"
                 ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 animate-pulse"
@@ -139,7 +146,7 @@ export default function DashboardPage() {
         <div className="flex items-center gap-2">
           <div className="flex bg-slate-100/80 dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700 p-0.5">
             <button
-              onClick={() => setViewMode("heatmap")}
+              onClick={() => handleViewModeChange("heatmap")}
               className={`p-1.5 px-2 rounded-md flex items-center gap-2 text-xs transition-colors ${
                 viewMode === "heatmap"
                   ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-sm"
@@ -151,7 +158,7 @@ export default function DashboardPage() {
               <span className="hidden xl:inline">{t.common.heatmap}</span>
             </button>
             <button
-              onClick={() => setViewMode("grid")}
+              onClick={() => handleViewModeChange("grid")}
               className={`p-1.5 px-2 rounded-md flex items-center gap-2 text-xs transition-colors ${
                 viewMode === "grid"
                   ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-sm"
@@ -341,6 +348,7 @@ export default function DashboardPage() {
                 <div className="mt-auto flex justify-center items-center gap-4 pt-4 border-t border-slate-200 dark:border-slate-800 relative">
                   <button
                     disabled={currentPage === 1}
+                    aria-label="previous page"
                     onClick={() => setCurrentPage((p) => p - 1)}
                     className="p-2 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                   >
@@ -364,6 +372,7 @@ export default function DashboardPage() {
 
                   <button
                     disabled={currentPage === totalPages}
+                    aria-label="next page"
                     onClick={() => setCurrentPage((p) => p + 1)}
                     className="p-2 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                   >

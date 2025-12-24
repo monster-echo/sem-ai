@@ -11,7 +11,6 @@ import {
   BarChart2,
   Router,
   Settings,
-  LayoutGrid,
   X,
   LogOut,
   ChevronLeft,
@@ -127,7 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         >
           {!isCollapsed && (
             <div className="flex items-center gap-3 whitespace-nowrap overflow-hidden">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shrink-0">
+              <div className="w-8 h-8 bg-linear-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shrink-0">
                 <Factory className="text-white w-4 h-4" />
               </div>
               <div>
@@ -141,7 +140,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
           )}
           {isCollapsed && (
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shrink-0">
+            <div className="w-8 h-8 bg-linear-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shrink-0">
               <Factory className="text-white w-4 h-4" />
             </div>
           )}
@@ -149,6 +148,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           {mode === "overlay" && (
             <button
               onClick={onClose}
+              aria-label="close sidebar"
               className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
@@ -158,6 +158,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           {mode === "docked" && !isCollapsed && (
             <button
               onClick={onToggleCollapse}
+              aria-label="toggle collapse"
               className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -180,7 +181,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 group whitespace-nowrap
                   ${
                     isActive
-                      ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+                      ? "bg-linear-to-r from-blue-600 to-blue-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]"
                       : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white"
                   }
                   ${isCollapsed ? "justify-center px-2" : ""}
@@ -209,6 +210,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           {mode === "docked" && isCollapsed && (
             <button
               onClick={onToggleCollapse}
+              aria-label="toggle collapse"
               className="w-full flex items-center justify-center p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <ChevronRight className="w-5 h-5" />

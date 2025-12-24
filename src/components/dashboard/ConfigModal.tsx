@@ -28,7 +28,10 @@ const ConfigModal: React.FC<ConfigModalProps> = ({ isOpen, onClose }) => {
         <div className="p-6 space-y-6">
           <div className="space-y-2">
             <label className="text-sm text-slate-400 block">数据刷新频率</label>
-            <select className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+            <select
+              aria-label="data refresh rate"
+              className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+            >
               <option>实时 (Real-time)</option>
               <option>5 秒</option>
               <option>30 秒</option>
@@ -43,6 +46,7 @@ const ConfigModal: React.FC<ConfigModalProps> = ({ isOpen, onClose }) => {
             <div className="flex items-center gap-4">
               <input
                 type="range"
+                aria-label="alarm sensitivity"
                 className="flex-1 accent-blue-500"
                 min="50"
                 max="100"

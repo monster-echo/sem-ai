@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { MACHINE_STATUS_TYPES } from "@/lib/data";
 import { Machine } from "@/types";
@@ -14,6 +14,18 @@ const MachineDetailPanel: React.FC<MachineDetailPanelProps> = ({
   onClose,
 }) => {
   const { t } = useTranslation();
+  const [trendData, setTrendData] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (machine) {
+      // Use setTimeout to avoid synchronous state update warning
+      const timer = setTimeout(() => {
+        setTrendData([...Array(20)].map(() => 30 + Math.random() * 60));
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [machine]);
+
   if (!machine) return null;
   const statusConfig = MACHINE_STATUS_TYPES[machine.status];
 
@@ -94,11 +106,11 @@ const MachineDetailPanel: React.FC<MachineDetailPanelProps> = ({
             {t.common.loadTrend}
           </h3>
           <div className="h-32 bg-slate-50 dark:bg-slate-800 rounded-lg p-2 flex items-end justify-between gap-1">
-            {[...Array(20)].map((_, i) => (
+            {trendData.map((height, i) => (
               <div
                 key={i}
                 className="w-full bg-blue-500/30 rounded-t-sm hover:bg-blue-500/60 transition-colors"
-                style={{ height: `${30 + Math.random() * 60}%` }}
+                style={{ height: `${height}%` }}
               ></div>
             ))}
           </div>

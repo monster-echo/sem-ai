@@ -1,8 +1,19 @@
 import React from "react";
 import { AlertTriangle } from "lucide-react";
 import { MACHINE_STATUS_TYPES } from "@/lib/data";
+import { Machine } from "@/types";
 
-const MachineHeatmapCell = ({ machine, onClick, isSelected }) => {
+interface MachineHeatmapCellProps {
+  machine: Machine;
+  onClick: (machine: Machine) => void;
+  isSelected: boolean;
+}
+
+const MachineHeatmapCell: React.FC<MachineHeatmapCellProps> = ({
+  machine,
+  onClick,
+  isSelected,
+}) => {
   const statusConfig = MACHINE_STATUS_TYPES[machine.status];
 
   return (

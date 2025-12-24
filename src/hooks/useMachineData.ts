@@ -1,15 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import { generateMachines, generateHourlyData } from "@/lib/data";
+import { Machine, HourlyData } from "@/types";
 
 export const useMachineData = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [allMachines, setAllMachines] = useState<any[]>([]);
-  const [hourlyData, setHourlyData] = useState<any[]>([]);
-
-  useEffect(() => {
-    setAllMachines(generateMachines(100));
-    setHourlyData(generateHourlyData());
-  }, []);
+  const [allMachines, setAllMachines] = useState<Machine[]>(() =>
+    generateMachines(100)
+  );
+  const [hourlyData] = useState<HourlyData[]>(() => generateHourlyData());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -41,6 +39,7 @@ export const useMachineData = () => {
 
   const stats = useMemo(() => {
     return {
+      total: allMachines.length,
       running: allMachines.filter((m) => m.status === "RUNNING").length,
       idle: allMachines.filter((m) => m.status === "IDLE").length,
       alarm: allMachines.filter((m) => m.status === "ALARM").length,

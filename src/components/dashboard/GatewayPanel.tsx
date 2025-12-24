@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Router,
   Wifi,
@@ -9,7 +9,6 @@ import {
   Server,
   RefreshCw,
   Settings,
-  MoreVertical,
   CheckCircle2,
   AlertTriangle,
   XCircle,
@@ -18,12 +17,8 @@ import {
 import { generateGatewayList } from "@/lib/data";
 
 export default function GatewayPanel() {
-  const [gateways, setGateways] = useState([]);
+  const [gateways, setGateways] = useState(() => generateGatewayList());
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  useEffect(() => {
-    setGateways(generateGatewayList());
-  }, []);
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -33,7 +28,7 @@ export default function GatewayPanel() {
     }, 1000);
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case "ONLINE":
         return "text-emerald-600 dark:text-emerald-500 bg-emerald-100 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20";
@@ -46,7 +41,7 @@ export default function GatewayPanel() {
     }
   };
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case "ONLINE":
         return <CheckCircle2 className="w-4 h-4" />;
