@@ -19,6 +19,7 @@ const ConfigModal: React.FC<ConfigModalProps> = ({ isOpen, onClose }) => {
           </h3>
           <button
             onClick={onClose}
+            aria-label="Close configuration modal"
             className="text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
