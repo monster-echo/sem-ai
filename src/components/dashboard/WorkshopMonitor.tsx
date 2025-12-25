@@ -7,6 +7,7 @@ import {
   Thermometer,
   Activity,
 } from "lucide-react";
+import CameraPlayer from "./CameraPlayer";
 
 const WorkshopMonitor = () => {
   const [selectedZone, setSelectedZone] = useState("all");
@@ -21,6 +22,8 @@ const WorkshopMonitor = () => {
       program: "P-2024-001",
       temp: 42,
       vibration: 1.2,
+      cameraUrl:
+        "http://218.219.214.248:50000/nphMotionJpeg?Resolution=640x480",
     },
     {
       id: "CNC-002",
@@ -31,6 +34,7 @@ const WorkshopMonitor = () => {
       program: "P-2024-003",
       temp: 65,
       vibration: 2.8,
+      cameraUrl: "http://88.53.197.250/axis-cgi/mjpg/video.cgi",
     },
     {
       id: "CNC-003",
@@ -41,6 +45,7 @@ const WorkshopMonitor = () => {
       program: "-",
       temp: 25,
       vibration: 0,
+      cameraUrl: "http://158.58.130.148/mjpg/video.mjpg",
     },
     {
       id: "CNC-004",
@@ -51,6 +56,7 @@ const WorkshopMonitor = () => {
       program: "P-2024-002",
       temp: 44,
       vibration: 1.1,
+      cameraUrl: "http://86.63.39.58:8080/axis-cgi/mjpg/video.cgi",
     },
     {
       id: "CNC-005",
@@ -61,6 +67,7 @@ const WorkshopMonitor = () => {
       program: "P-2024-005",
       temp: 28,
       vibration: 0,
+      cameraUrl: "http://109.247.15.178:6001/mjpg/video.mjpg",
     },
     {
       id: "CNC-006",
@@ -71,6 +78,7 @@ const WorkshopMonitor = () => {
       program: "P-2024-004",
       temp: 41,
       vibration: 1.3,
+      cameraUrl: "http://142.0.109.159/axis-cgi/mjpg/video.cgi",
     },
   ];
 
@@ -201,28 +209,16 @@ const WorkshopMonitor = () => {
             </div>
 
             {/* 摄像头预览区域 */}
-            <div className="relative aspect-video bg-slate-100 dark:bg-slate-900 group-hover:brightness-110 transition-all">
-              <div className="absolute inset-0 flex items-center justify-center text-slate-400 dark:text-slate-600">
-                <Camera className="w-12 h-12 opacity-20" />
-              </div>
-              {/* 模拟监控画面覆盖层 */}
-              <div className="absolute top-2 left-2 bg-black/60 px-2 py-1 rounded text-xs text-white font-mono backdrop-blur-sm">
-                CAM-0{machine.id.split("-")[1]}
-              </div>
-              <div className="absolute bottom-2 right-2 flex gap-2">
-                <button
-                  type="button"
-                  title="全屏查看"
-                  aria-label="全屏查看"
-                  className="p-1.5 bg-black/60 hover:bg-blue-600 text-white rounded backdrop-blur-sm transition-colors"
-                >
-                  <Maximize2 className="w-3 h-3" />
-                </button>
-              </div>
+            <div className="relative aspect-video bg-slate-100 dark:bg-slate-900 group-hover:brightness-110 transition-all overflow-hidden">
+              <CameraPlayer
+                url={machine.cameraUrl}
+                name={machine.name}
+                status={machine.status}
+              />
 
               {/* 状态指示条 */}
               {machine.status === "running" && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500/50">
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500/50 z-20">
                   <div
                     className="h-full bg-emerald-500 animate-pulse"
                     style={{ width: `${machine.progress}%` }}
