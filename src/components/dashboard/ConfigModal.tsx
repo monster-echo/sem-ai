@@ -57,23 +57,6 @@ const ConfigModal: React.FC<ConfigModalProps> = ({ isOpen, onClose }) => {
               </span>
             </div>
           </div>
-
-          <div className="space-y-2">
-            <label className="text-sm text-slate-400 block">显示主题</label>
-            <div className="grid grid-cols-2 gap-3">
-              <button className="flex items-center justify-center gap-2 p-3 rounded-lg border-2 border-blue-500 bg-slate-800 text-white">
-                <div className="w-4 h-4 rounded-full bg-slate-950 border border-slate-700"></div>
-                深色工业
-              </button>
-              <button
-                className="flex items-center justify-center gap-2 p-3 rounded-lg border border-slate-700 bg-slate-100 text-slate-900 opacity-60 cursor-not-allowed"
-                title="暂不支持"
-              >
-                <div className="w-4 h-4 rounded-full bg-white border border-slate-300"></div>
-                浅色办公
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="p-4 bg-slate-950/50 border-t border-slate-800 flex justify-end gap-3">

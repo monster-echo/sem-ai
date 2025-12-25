@@ -53,7 +53,7 @@ export default function DashboardPage() {
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 20;
 
   const filteredMachines = useMemo(() => {
     if (statusFilter === "ALL") return allMachines;
@@ -200,13 +200,13 @@ export default function DashboardPage() {
             </button>
           )}
 
-          <button
+          {/* <button
             onClick={() => setIsConfigOpen(true)}
             className="p-2 rounded-lg bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors"
             title={t.common.config}
           >
             <Cog className="w-4 h-4" />
-          </button>
+          </button> */}
         </div>
       </div>
 
