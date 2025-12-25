@@ -74,6 +74,19 @@ const zh = {
     warning: "警告",
     info: "提示",
   },
+  login: {
+    title: "登录您的账户",
+    welcome: "欢迎回来",
+    subtitle: "输入您的凭据以访问仪表盘",
+    username: "用户名",
+    password: "密码",
+    signIn: "登录",
+    signingIn: "登录中...",
+    error: "用户名或密码错误",
+    defaultCredentials: "默认账号: admin / admin",
+    failed: "登录失败",
+    retry: "请稍后重试",
+  },
 };
 
 export default zh;

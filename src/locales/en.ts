@@ -75,6 +75,19 @@ const en = {
     warning: "Warning",
     info: "Info",
   },
+  login: {
+    title: "Sign in to your account",
+    welcome: "Welcome back",
+    subtitle: "Enter your credentials to access the dashboard",
+    username: "Username",
+    password: "Password",
+    signIn: "Sign in",
+    signingIn: "Signing in...",
+    error: "Invalid username or password",
+    defaultCredentials: "Default: admin / admin",
+    failed: "Login failed",
+    retry: "Please try again later",
+  },
 };
 
 export default en;

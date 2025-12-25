@@ -33,6 +33,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   // Determine if we are on the dashboard page
   const isDashboard = pathname === "/dashboard" || pathname === "/";
+  const isLoginPage = pathname === "/login";
+
+  if (isLoginPage) {
+    return (
+      <>
+        {children}
+        <Toaster
+          theme={theme as "light" | "dark" | "system"}
+          richColors
+          position="top-center"
+          closeButton
+        />
+      </>
+    );
+  }
 
   return (
     <>
