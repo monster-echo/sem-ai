@@ -4,12 +4,14 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Menu, Factory } from "lucide-react";
 import NotificationTicker from "../dashboard/NotificationTicker";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+  const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -43,10 +45,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-wide">
-                SEM 总控中心
+                {t.sidebar.title}
               </h1>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                Enterprise Edition
+                {t.sidebar.subtitle}
               </p>
             </div>
           </div>
