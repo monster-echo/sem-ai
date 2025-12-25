@@ -20,6 +20,8 @@ export const MachineSchema = z.object({
   rpm: z.number(),
   load: z.number(),
   zone: z.string(),
+  productionCount: z.number(),
+  availability: z.number(),
 });
 export type Machine = z.infer<typeof MachineSchema>;
 

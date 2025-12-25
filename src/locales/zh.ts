@@ -24,6 +24,8 @@ const zh = {
     stop: "停止",
     config: "系统配置",
     realtimeOEE: "实时 OEE",
+    production: "产量",
+    availability: "可动率",
     productionTrend: "车间产量趋势",
     alarmQueue: "报警队列",
     noAlarms: "当前无报警",

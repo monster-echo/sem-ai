@@ -24,6 +24,8 @@ const en = {
     stop: "Stop",
     config: "Configuration",
     realtimeOEE: "Real-time OEE",
+    production: "Production",
+    availability: "Availability",
     productionTrend: "Production Trend",
     alarmQueue: "Alarm Queue",
     noAlarms: "No Active Alarms",

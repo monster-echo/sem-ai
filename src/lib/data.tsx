@@ -96,6 +96,10 @@ export const generateMachines = (count = 100): Machine[] => {
       rpm: status === "RUNNING" ? 8000 + Math.floor(Math.random() * 10000) : 0,
       load: status === "RUNNING" ? 40 + Math.floor(Math.random() * 55) : 0,
       zone: i <= 30 ? "A区" : i <= 60 ? "B区" : "C区",
+      productionCount:
+        status === "RUNNING" ? 10000 + Math.floor(Math.random() * 20000) : 0,
+      availability:
+        status === "RUNNING" ? 50 + Math.floor(Math.random() * 50) : 0,
     });
   }
   return machines;

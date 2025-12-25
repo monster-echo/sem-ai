@@ -24,6 +24,8 @@ const ms = {
     stop: "Berhenti",
     config: "Konfigurasi",
     realtimeOEE: "OEE Masa Nyata",
+    production: "Pengeluaran",
+    availability: "Ketersediaan",
     productionTrend: "Trend Pengeluaran",
     alarmQueue: "Barisan Penggera",
     noAlarms: "Tiada Penggera Aktif",

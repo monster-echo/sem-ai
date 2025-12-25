@@ -33,12 +33,20 @@ import {
 import { useTranslation } from "@/hooks/useTranslation";
 import { useTheme } from "next-themes";
 import { Machine } from "@/types";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function DashboardPage() {
   const { allMachines, hourlyData, stats } = useMachineData();
   const { t } = useTranslation();
   const { theme } = useTheme();
-  const [viewMode, setViewMode] = useState<"heatmap" | "grid">("heatmap");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const initialViewMode =
+    (searchParams.get("view") as "heatmap" | "grid") || "heatmap";
+  const [viewMode, setViewMode] = useState<"heatmap" | "grid">(initialViewMode);
+
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMachine, setSelectedMachine] = useState<Machine | null>(null);
@@ -66,6 +74,9 @@ export default function DashboardPage() {
   const handleViewModeChange = (mode: "heatmap" | "grid") => {
     setViewMode(mode);
     setCurrentPage(1);
+    const params = new URLSearchParams(searchParams);
+    params.set("view", mode);
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   useEffect(() => {
