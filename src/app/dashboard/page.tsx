@@ -16,7 +16,6 @@ import {
   List,
   Play,
   Pause,
-  Cog,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
