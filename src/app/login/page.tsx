@@ -50,9 +50,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        toast.error(t.login.error, {
-          description: t.login.error,
-        });
+        toast.error(t.login.error);
       } else {
         toast.success(t.login.welcome, {
           description: t.login.signingIn,
