@@ -75,6 +75,19 @@ const ms = {
     warning: "Amaran",
     info: "Info",
   },
+  login: {
+    title: "Log Masuk ke SEM Control Center",
+    subtitle: "Sila masukkan butiran akaun anda untuk meneruskan.",
+    username: "Nama Pengguna",
+    password: "Kata Laluan",
+    error: "Ralat log masuk",
+    welcome: "Selamat datang kembali!",
+    signIn: "Log Masuk",
+    signingIn: "Log masuk ke papan pemuka anda...",
+    defaultCredentials: "Lalai: admin / admin",
+    failed: "Log masuk gagal",
+    retry: "Sila cuba lagi.",
+  },
 };
 
 export default ms;

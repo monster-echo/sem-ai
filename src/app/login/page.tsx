@@ -60,7 +60,7 @@ export default function LoginPage() {
         router.push("/dashboard");
         router.refresh();
       }
-    } catch (error) {
+    } catch {
       toast.error(t.login.failed, {
         description: t.login.retry,
       });

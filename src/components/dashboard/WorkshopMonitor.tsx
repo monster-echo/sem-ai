@@ -3,7 +3,6 @@ import {
   MonitorPlay,
   Filter,
   Maximize2,
-  Camera,
   Thermometer,
   Activity,
 } from "lucide-react";
