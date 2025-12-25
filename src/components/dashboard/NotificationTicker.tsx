@@ -69,7 +69,7 @@ export default function NotificationTicker() {
         setCurrentIndex((prev) => (prev + 1) % notifications.length);
         setIsVisible(true);
       }, 300); // Wait for fade out
-    }, 4000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, [notifications.length, isPaused]);
