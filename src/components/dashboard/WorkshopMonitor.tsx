@@ -111,6 +111,14 @@ const WorkshopMonitor = () => {
     }
   };
 
+  const getProxiedUrl = (url: string) => {
+    // Only proxy HTTP urls to avoid Mixed Content errors on HTTPS
+    if (url.startsWith("http://")) {
+      return `/api/camera/proxy?url=${encodeURIComponent(url)}`;
+    }
+    return url;
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* 顶部控制栏 */}
@@ -210,7 +218,7 @@ const WorkshopMonitor = () => {
             {/* 摄像头预览区域 */}
             <div className="relative aspect-video bg-slate-100 dark:bg-slate-900 group-hover:brightness-110 transition-all overflow-hidden">
               <CameraPlayer
-                url={machine.cameraUrl}
+                url={getProxiedUrl(machine.cameraUrl)}
                 name={machine.name}
                 status={machine.status}
               />

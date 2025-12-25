@@ -24,7 +24,8 @@ const CameraPlayer: React.FC<CameraPlayerProps> = ({ url, name, status }) => {
   const isMJPEG =
     url?.includes(".mjpg") ||
     url?.includes(".cgi") ||
-    url?.includes("nphMotionJpeg");
+    url?.includes("nphMotionJpeg") ||
+    url?.includes("/api/camera/proxy");
 
   const handleRetry = () => {
     setHasError(false);
