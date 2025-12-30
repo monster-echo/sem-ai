@@ -18,6 +18,7 @@ const CameraPlayer: React.FC<CameraPlayerProps> = ({ url, name, status }) => {
   const [hasError, setHasError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // 简单的流类型检测
@@ -31,6 +32,13 @@ const CameraPlayer: React.FC<CameraPlayerProps> = ({ url, name, status }) => {
     setHasError(false);
     setIsLoading(true);
     setRetryCount((prev) => prev + 1);
+    setIsPlaying(true);
+  };
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+    setHasError(false);
+    setIsLoading(true);
   };
 
   const toggleFullscreen = () => {
@@ -76,7 +84,7 @@ const CameraPlayer: React.FC<CameraPlayerProps> = ({ url, name, status }) => {
       }`}
     >
       {/* 加载状态 */}
-      {isLoading && !hasError && (
+      {isPlaying && isLoading && !hasError && (
         <div className="absolute inset-0 flex items-center justify-center z-10 bg-slate-900/20 backdrop-blur-[2px]">
           <RefreshCw className="w-8 h-8 text-blue-500 animate-spin opacity-80" />
         </div>
@@ -96,37 +104,53 @@ const CameraPlayer: React.FC<CameraPlayerProps> = ({ url, name, status }) => {
         </div>
       )}
 
-      {/* 播放器核心 */}
-      {isMJPEG ? (
-        // MJPEG 流必须使用 img 标签
-        // Next.js Image 组件不适合用于 MJPEG 视频流，因为它会尝试优化图像，导致流断开或性能问题
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={retryCount} // 改变 key 强制重新加载 img
-          src={url}
-          alt={`Live feed: ${name}`}
-          className={`w-full h-full object-cover transition-opacity duration-500 ${
-            isLoading ? "opacity-0" : "opacity-100"
-          }`}
-          onLoad={() => setIsLoading(false)}
-          onError={() => {
-            setIsLoading(false);
-            setHasError(true);
-          }}
-          referrerPolicy="no-referrer"
-        />
-      ) : (
-        // 未来扩展：HLS/WebRTC 流使用 video 标签
-        <video
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-          playsInline
-          controls={false}
+      {/* 待播放状态 */}
+      {!isPlaying && !hasError && (
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-slate-900/40 backdrop-blur-[1px] group-hover:bg-slate-900/30 transition-all cursor-pointer"
+          onClick={handlePlay}
         >
-          <source src={url} />
-        </video>
+          <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/20 group-hover:scale-110 transition-transform">
+            <Camera className="w-6 h-6 text-white opacity-80" />
+          </div>
+          <span className="text-xs text-white/80 mt-2 font-medium">
+            点击查看实时画面
+          </span>
+        </div>
       )}
+
+      {/* 播放器核心 */}
+      {isPlaying &&
+        (isMJPEG ? (
+          // MJPEG 流必须使用 img 标签
+          // Next.js Image 组件不适合用于 MJPEG 视频流，因为它会尝试优化图像，导致流断开或性能问题
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={retryCount} // 改变 key 强制重新加载 img
+            src={url}
+            alt={`Live feed: ${name}`}
+            className={`w-full h-full object-cover transition-opacity duration-500 ${
+              isLoading ? "opacity-0" : "opacity-100"
+            }`}
+            onLoad={() => setIsLoading(false)}
+            onError={() => {
+              setIsLoading(false);
+              setHasError(true);
+            }}
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          // 未来扩展：HLS/WebRTC 流使用 video 标签
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            playsInline
+            controls={false}
+          >
+            <source src={url} />
+          </video>
+        ))}
 
       {/* 专业 UI 覆盖层 */}
       <div className="absolute top-3 left-3 flex items-center gap-2 z-10 pointer-events-none">
